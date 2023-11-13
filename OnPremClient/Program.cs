@@ -45,7 +45,7 @@ IConfidentialClientApplication app = ConfidentialClientApplicationBuilder.Create
     .Build();
 
 var result = await app.AcquireTokenForClient(
-            new[] { "api://4cea62fb-22a4-4391-b63d-987508eaf05a/.default" })
+            new[] { apiScope })
             .ExecuteAsync();
 
 Console.WriteLine(result.AccessToken);
