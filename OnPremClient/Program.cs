@@ -48,4 +48,20 @@ var result = await app.AcquireTokenForClient(
             new[] { apiScope })
             .ExecuteAsync();
 
+Console.WriteLine("Acquired this JWT");
+Console.WriteLine("----------------------------");
 Console.WriteLine(result.AccessToken);
+
+
+HttpClient client = new HttpClient();
+client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
+var response = await client.GetAsync("https://localhost:7074/WeatherForecast");
+
+//Give the API some time to start up
+Thread.Sleep(3000);
+
+Console.WriteLine("Response from API");
+Console.WriteLine("----------------------------");
+Console.WriteLine($"STATUS: {response.StatusCode}");
+Console.WriteLine(await response.Content.ReadAsStringAsync());
+Console.ReadLine();
